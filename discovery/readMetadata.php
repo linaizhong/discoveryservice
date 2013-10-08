@@ -404,6 +404,7 @@ function processSPRoleDescriptor($SPRoleDescriptorNode){
 /******************************************************************************/
 // Dump variable to a file 
 function dumpFile($dumpFile, $providers, $variableName){
+	return; // Don't dump variables to a file. We are generating them from FR.
 	 
 	if(($fp = fopen($dumpFile, 'w')) !== false){
 		
