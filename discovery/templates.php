@@ -40,7 +40,23 @@ function printWAYF(){
 	$promptMessage =  '<strong>'.getLocalString('make_selection').'</strong>';
 
 /* Code from AAF that converts the SP end point or entity ID into the Service Name for display to the end user */
-	if (isset($_GET['return'])){
+	if (isset($_GET['entityID'])){
+	    $result = "service on host ".getHostNameFromURI($_GET['entityID']);
+
+            if (isset($SProviders)) {
+
+	        $value = $_GET['entityID'];
+
+	        foreach ($SProviders as $key => $SProvider){
+		    if ($value == $key) {
+		        $result = $SProvider['Name'];
+                        break;
+                    }
+	        }
+	    }
+
+	    $promptMessage =  sprintf(getLocalString('access_host'), $result);
+	} else if (isset($_GET['return'])){
 
 	    $result = "service on host ".getHostNameFromURI($_GET['return']);
 
@@ -61,22 +77,6 @@ function printWAYF(){
                     }
                 }
             }
-
-	    $promptMessage =  sprintf(getLocalString('access_host'), $result);
-	} else if (isset($_GET['entityID'])){
-	    $result = "service on host ".getHostNameFromURI($_GET['entityID']);
-
-            if (isset($SProviders)) {
-		
-	        $value = $_GET['entityID'];
-
-	        foreach ($SProviders as $key => $SProvider){
-		    if ($value == $key) {
-		        $result = $SProvider['Name'];
-                        break;
-                    }
-	        }
-	    }
 
 	    $promptMessage =  sprintf(getLocalString('access_host'), $result);
 	} else if (isset($_GET['shire'])){
