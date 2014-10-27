@@ -705,6 +705,8 @@ function logError($message){
                 return;
         }
 
+	syslog(LOG_ERR, $message);
+
 	if (is_writable($WAYFLogFile.'.error')) {
 
 	    $entry = date('Y-m-d H:i:s').' '.$message."\n";
@@ -736,7 +738,18 @@ function logAccessEntry($protocol, $type, $sp, $idp){
 	if (!$useLogging){
 		return;
 	}
-	
+
+	$json = json_encode(Array(
+		'date' => date('Y-m-d H:i:s'),
+		'ip' => $_SERVER['REMOTE_ADDR'],
+		'protocol' => $protocol,
+		'type' => $type,
+		'idp' => $idp,
+		'sp' => $_GET['entityID'],
+		'return_url' => $sp
+	));
+	syslog(LOG_NOTICE, $json);
+
 	// Let's make sure the file exists and is writable first.
 	if (is_writable($WAYFLogFile)) {
 			

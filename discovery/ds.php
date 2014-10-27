@@ -21,6 +21,8 @@ require_once('languages.php');
 // Set P3P headers just in case they were not set in Apache already
 header('P3P: CP="NOI CUR DEVa OUR IND COM NAV PRE"');
 
+openlog('discoveryservice', LOG_PID | LOG_PERROR, LOG_ERR);
+
 // Set default config options
 initConfigOptions();
 
